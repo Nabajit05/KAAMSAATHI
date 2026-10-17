@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Contrast measured (WCAG relative luminance):
+ *   ink #172B2A on bg #F7F8F5 ........ 13.9:1
+ *   muted #4F5F5C on bg #F7F8F5 ...... 6.3:1
+ *   primary #0F665D on white ......... 6.8:1 (6.4:1 on bg)
+ *   faint #5F6F6C on white ........... 5.3:1
+ *   attention-ink #8A3B0A on #FDF1DE . 6.9:1
+ *   error #B42318 on white ........... 6.6:1
+ *   border #D5DEDA is decorative; inputs use #7F8F8B (3.3:1) for the control boundary.
+ */
+@theme {
+  --color-bg: #f7f8f5;
+  --color-surface: #ffffff;
+  --color-sunken: #eef2ef;
+  --color-ink: #172b2a;
+  --color-muted: #4f5f5c;
+  --color-faint: #5f6f6c;
+  --color-border: #d5deda;
+  --color-control: #7f8f8b;
+  --color-primary: #0f665d;
+  --color-primary-strong: #0b4f48;
+  --color-primary-soft: #e3f1ee;
+  --color-deep: #0d2b27;
+  --color-mint: #5fd3b5;
+  --color-attention: #fdf1de;
+  --color-attention-ink: #8a3b0a;
+  --color-attention-line: #e8a94f;
+  --color-success-soft: #e4f4ea;
+  --color-success-ink: #1e6b3a;
+  --color-error: #b42318;
+  --color-error-soft: #fdecea;
+
+  --font-sans: var(--font-inter), var(--font-devanagari), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1.5rem;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgb(23 43 42 / 0.04), 0 8px 24px rgb(23 43 42 / 0.06);
+  --shadow-float: 0 8px 32px rgb(23 43 42 / 0.16);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* Hindi needs a little more line height for matras. */
+:lang(hi) {
+  line-height: 1.7;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.focus-ring-light:focus-visible {
+  outline-color: #ffffff;
+}
+
+.sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Hatched "not yet" segment, like the remaining part of a progress bar. */
+.hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-border) 0 2px,
+    transparent 2px 7px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+  main {
+    max-width: none !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+  .print-sheet section,
+  .print-sheet tr {
+    break-inside: avoid;
+  }
+  .print-sheet {
+    box-shadow: none !important;
+    border: 0 !important;
+    padding: 0 !important;
+  }
+}

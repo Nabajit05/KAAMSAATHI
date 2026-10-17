@@ -1,0 +1,10 @@
+{
+  "name": "HaqCheck",
+  "short_name": "HaqCheck",
+  "description": "Understand your payment. Check a possible mistake. Prepare your complaint with evidence.",
+  "start_url": "/home",
+  "display": "standalone",
+  "background_color": "#f7f8f5",
+  "theme_color": "#0f665d",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
