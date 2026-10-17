@@ -26,7 +26,7 @@ export async function uploadEvidence(caseId: string, file: File, workerRedacted:
     method: "POST",
     json: { filename: file.name.slice(0, 120), mime: file.type, byteSize: file.size, workerRedacted },
   });
-  const sb = supabaseBrowser();
+  const sb = await supabaseBrowser();
   if (!sb) throw new Error("not_configured");
   const { error } = await sb.storage.from("evidence").uploadToSignedUrl(init.path, init.token, file, { contentType: file.type });
   if (error) throw new Error("upload_failed");

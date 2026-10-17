@@ -94,9 +94,12 @@ export function Providers({ initialLocale, children }: { initialLocale: Locale; 
   }, []);
 
   useEffect(() => {
-    const sb = supabaseBrowser();
-    if (!sb) return;
+    const pending = supabaseBrowser();
+    if (!pending) return;
     let active = true;
+    let unsub: (() => void) | null = null;
+    void pending.then((sb) => {
+    if (!active) return;
     sb.auth.getUser().then(({ data }) => {
       if (!active) return;
       setUser(data.user ? { id: data.user.id, phone: data.user.phone || null, email: data.user.email || null } : null);
@@ -105,9 +108,11 @@ export function Providers({ initialLocale, children }: { initialLocale: Locale; 
     const { data: sub } = sb.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ? { id: session.user.id, phone: session.user.phone || null, email: session.user.email || null } : null);
     });
+    unsub = () => sub.subscription.unsubscribe();
+    });
     return () => {
       active = false;
-      sub.subscription.unsubscribe();
+      unsub?.();
     };
   }, []);
 
@@ -115,14 +120,14 @@ export function Providers({ initialLocale, children }: { initialLocale: Locale; 
   useEffect(() => {
     if (!sharedDevice || !user) return;
     const onHide = () => {
-      supabaseBrowser()?.auth.signOut({ scope: "local" });
+      void supabaseBrowser()?.then((sb) => sb.auth.signOut({ scope: "local" }));
     };
     window.addEventListener("pagehide", onHide);
     return () => window.removeEventListener("pagehide", onHide);
   }, [sharedDevice, user]);
 
   const signOut = useCallback(async () => {
-    await supabaseBrowser()?.auth.signOut();
+    await (await supabaseBrowser())?.auth.signOut();
     clearDeviceData({ keepPrefs: true });
     setUser(null);
     router.push("/");

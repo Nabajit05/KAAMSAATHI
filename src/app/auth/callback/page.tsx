@@ -22,7 +22,7 @@ export default function AuthCallbackPage() {
 
   useEffect(() => {
     const run = async () => {
-      const sb = supabaseBrowser();
+      const sb = await supabaseBrowser();
       const url = new URL(window.location.href);
       const next = safeNext(url.searchParams.get("next"));
       const hash = new URLSearchParams(url.hash.slice(1));

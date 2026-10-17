@@ -66,7 +66,7 @@ function SignInForm() {
     setBusy(true);
     // Email links use the implicit flow so they work in any browser or mail app;
     // phone codes are verified in this browser.
-    const { error } = await (isEmail ? emailLinkClient() : supabaseBrowser()!).auth.signInWithOtp({
+    const { error } = await (isEmail ? await emailLinkClient() : (await supabaseBrowser())!).auth.signInWithOtp({
       ...identity,
       options: {
         shouldCreateUser: true,
@@ -89,7 +89,7 @@ function SignInForm() {
     setErrors({});
     setFormError(null);
     setBusy(true);
-    const sb = supabaseBrowser()!;
+    const sb = (await supabaseBrowser())!;
     const { data, error } = isEmail
       ? await sb.auth.verifyOtp({ email, token, type: "email" })
       : await sb.auth.verifyOtp({ phone: `+91${normalized}`, token, type: "sms" });

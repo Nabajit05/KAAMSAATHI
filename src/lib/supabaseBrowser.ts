@@ -1,15 +1,19 @@
 "use client";
 
-import { createBrowserClient } from "@supabase/ssr";
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { authConfigured, publicConfig } from "./publicConfig";
 
-let client: SupabaseClient | null = null;
+let client: Promise<SupabaseClient> | null = null;
 
-/** Browser client using cookie-based sessions (the server reads the same cookies). */
-export function supabaseBrowser(): SupabaseClient | null {
+/**
+ * Browser client using cookie-based sessions (the server reads the same cookies).
+ * Loaded on demand so pages that never touch auth don't ship the Supabase SDK up front.
+ */
+export function supabaseBrowser(): Promise<SupabaseClient> | null {
   if (!authConfigured) return null;
-  client ??= createBrowserClient(publicConfig.supabaseUrl, publicConfig.supabaseAnonKey);
+  client ??= import("@supabase/ssr").then(({ createBrowserClient }) =>
+    createBrowserClient(publicConfig.supabaseUrl, publicConfig.supabaseAnonKey),
+  );
   return client;
 }
 
@@ -18,7 +22,8 @@ export function supabaseBrowser(): SupabaseClient | null {
  * carries the session itself, so it works even if opened in a different
  * browser than the one that asked (PKCE would require the same browser).
  */
-export function emailLinkClient(): SupabaseClient {
+export async function emailLinkClient(): Promise<SupabaseClient> {
+  const { createClient } = await import("@supabase/supabase-js");
   return createClient(publicConfig.supabaseUrl, publicConfig.supabaseAnonKey, {
     auth: { flowType: "implicit", persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
   });
