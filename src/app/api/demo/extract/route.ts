@@ -1,8 +1,6 @@
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 import { NextResponse } from "next/server";
 import { FIXTURES } from "@/fixtures/demo";
-import { SAMPLE_DOCS } from "@/fixtures/documents";
+import { SAMPLE_IMAGES } from "@/fixtures/sampleImages";
 import { providers } from "@/server/ai";
 import { extractionToFacts, validateExtraction } from "@/server/ai/extractToFacts";
 import { ProviderError } from "@/server/ai/types";
@@ -31,7 +29,7 @@ export const POST = route(async (req, _ctx: unknown, requestId) => {
     docIds.map(async (id) => ({
       documentId: id,
       mime: "image/png" as const,
-      bytes: await readFile(join(process.cwd(), "public", "demo", SAMPLE_DOCS[id].filename)),
+      bytes: Buffer.from(SAMPLE_IMAGES[id], "base64"),
     })),
   );
 

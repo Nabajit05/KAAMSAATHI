@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 
 const URL_ = process.env.NEXT_PUBLIC_SUPABASE_URL, PUB = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, SECRET = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const REF = new URL(URL_).hostname.split(".")[0];
-const BASE = "http://localhost:3300";
+const BASE = process.env.SMOKE_BASE ?? "http://localhost:3300";
 const admin = createClient(URL_, SECRET, { auth: { persistSession: false } });
 const ok = (c, m) => console.log(`${c ? "PASS" : "FAIL"} ${m}`);
 const created = [];

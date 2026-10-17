@@ -1,0 +1,20 @@
+{
+  // Cloudflare Workers config for OpenNext. "name" must match the Worker in your
+  // Cloudflare account, and the self-reference service must use the same name.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kaamsaathi",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "kaamsaathi"
+    }
+  ],
+  "observability": { "enabled": true }
+}

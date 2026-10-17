@@ -196,7 +196,34 @@ describe("image verification", () => {
     await expect(verifyImage(Buffer.from("<svg onload=alert(1)>"), "image/png")).rejects.toBeInstanceOf(ImageRejected);
     const ok = await verifyImage(png, "image/png");
     expect(ok.sha256).toMatch(/^[0-9a-f]{64}$/);
-    expect(sniffMime(ok.derivative)).toBe("image/webp");
+    expect(sniffMime(ok.derivative)).toBe("image/png");
+    expect(ok.width).toBe(200);
+  });
+
+  it("rejects animated images and keeps WebP decodable after stripping", async () => {
+    const webp = await sharp({ create: { width: 120, height: 90, channels: 3, background: "#eee" } })
+      .webp()
+      .withExif({ IFD0: { Copyright: "x" } })
+      .toBuffer();
+    const r = await verifyImage(webp, "image/webp");
+    expect([r.width, r.height]).toEqual([120, 90]);
+    const meta = await sharp(r.derivative).metadata();
+    expect(meta.width).toBe(120);
+    expect(meta.exif).toBeUndefined();
+    // Same image wrapped in a VP8X header with the animation flag set.
+    const plain = await sharp({ create: { width: 100, height: 100, channels: 3, background: "#fff" } }).webp().toBuffer();
+    const vp8x = Buffer.alloc(18);
+    vp8x.write("VP8X", 0, "latin1");
+    vp8x.writeUInt32LE(10, 4);
+    vp8x[8] = 0x02;
+    vp8x.writeUIntLE(99, 12, 3);
+    vp8x.writeUIntLE(99, 15, 3);
+    const body = Buffer.concat([vp8x, plain.subarray(12)]);
+    const head = Buffer.alloc(12);
+    head.write("RIFF", 0, "latin1");
+    head.writeUInt32LE(body.length + 4, 4);
+    head.write("WEBP", 8, "latin1");
+    await expect(verifyImage(Buffer.concat([head, body]), "image/webp")).rejects.toThrow("animated");
   });
 
   it("rejects tiny images and oversized files", async () => {
@@ -214,6 +241,7 @@ describe("image verification", () => {
     expect(r.hadLocation).toBe(true);
     const meta = await sharp(r.derivative).metadata();
     expect(meta.exif).toBeUndefined();
+    expect(meta.width).toBe(200); // still a valid, decodable image
   });
 });
 

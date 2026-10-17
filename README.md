@@ -76,3 +76,17 @@ The `guidance_sources` table exists but is not populated or read by the app: Hel
 - Migrations applied to the Supabase project via the Management API (`SUPABASE_ACCESS_TOKEN` in `.env.local`).
 - Sign-in: `NEXT_PUBLIC_AUTH_METHOD=email` (magic link to `/auth/callback`). Free-tier Supabase cannot edit email templates without custom SMTP, so the email carries a link, not a code, and the built-in mailer sends at most 2 emails per hour. Add custom SMTP before a pilot.
 - Live smoke test: `set -a; . ./.env.local; set +a; npx next dev -p 3300` then `node scripts/live-smoke.mjs` (creates and deletes two throwaway users).
+
+## Deploying to Cloudflare Workers (OpenNext)
+
+`wrangler.jsonc` deploys a Worker named **`kaamsaathi`** (the name must match the Worker in your Cloudflare account; the `WORKER_SELF_REFERENCE` service binding uses the same name).
+
+Workers Builds settings:
+- Build command: `npx opennextjs-cloudflare build`
+- Deploy command: `npx opennextjs-cloudflare deploy`
+- **Build variables** (inlined into the browser bundle at build time): `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `NEXT_PUBLIC_AUTH_METHOD=email`
+- **Runtime secrets** (Worker → Settings → Variables and Secrets, type Secret): `GEMINI_API_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+
+After the first deploy, set Supabase **Site URL** to the Worker URL so email links open the deployed app.
+
+Local check of the Worker build: `npm run cf:build`, put the two secrets in `.dev.vars` (git-ignored), then `npx wrangler dev`. Image checks are pure JS (no `sharp`) so they run on Workers.

@@ -60,7 +60,7 @@ export const POST = route(async (req, { params }: Ctx, requestId) => {
     for (const e of pending) {
       const { data } = await sb.storage.from("evidence").download(e.derivative_key!);
       if (!data) return fail("ai_unavailable");
-      images.push({ documentId: e.id, mime: "image/webp" as const, bytes: Buffer.from(await data.arrayBuffer()) });
+      images.push({ documentId: e.id, mime: (e.verified_mime ?? e.declared_mime) as "image/jpeg" | "image/png" | "image/webp", bytes: Buffer.from(await data.arrayBuffer()) });
     }
     const started = Date.now();
     let raw: unknown;

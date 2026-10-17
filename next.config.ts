@@ -31,9 +31,6 @@ const csp = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
-  outputFileTracingIncludes: {
-    "/api/demo/extract": ["./public/demo/**"],
-  },
   async headers() {
     return [
       {

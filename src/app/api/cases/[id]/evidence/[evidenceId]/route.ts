@@ -56,8 +56,9 @@ export const POST = route(async (_req, { params }: Ctx, requestId) => {
   }
   if (rows.some((r) => r.id !== ev.id && r.sha256 === verified.sha256)) return reject("duplicate");
 
-  const derivativeKey = `${userId}/${id}/${crypto.randomUUID()}.derived.webp`;
-  const up = await sb.storage.from("evidence").upload(derivativeKey, verified.derivative, { contentType: "image/webp", upsert: false });
+  const ext = verified.mime.split("/")[1];
+  const derivativeKey = `${userId}/${id}/${crypto.randomUUID()}.derived.${ext}`;
+  const up = await sb.storage.from("evidence").upload(derivativeKey, verified.derivative, { contentType: verified.mime, upsert: false });
   if (up.error) throw new HttpError("internal", "storage error");
 
   const { error: updError } = await sb
