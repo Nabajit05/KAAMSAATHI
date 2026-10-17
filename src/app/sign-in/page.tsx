@@ -7,7 +7,7 @@ import { Icon } from "@/components/Icon";
 import { Button, Card, LinkButton, Notice } from "@/components/ui";
 import { normalizeIndianMobile, safeNext } from "@/lib/phone";
 import { authMethod } from "@/lib/publicConfig";
-import { supabaseBrowser } from "@/lib/supabaseBrowser";
+import { emailLinkClient, supabaseBrowser } from "@/lib/supabaseBrowser";
 import { useAnnounce, useAuth, usePrefs, useT } from "../providers";
 
 const CONSENT_VERSION = "2026-10-17";
@@ -64,7 +64,9 @@ function SignInForm() {
     setErrors({});
     setFormError(null);
     setBusy(true);
-    const { error } = await supabaseBrowser()!.auth.signInWithOtp({
+    // Email links use the implicit flow so they work in any browser or mail app;
+    // phone codes are verified in this browser.
+    const { error } = await (isEmail ? emailLinkClient() : supabaseBrowser()!).auth.signInWithOtp({
       ...identity,
       options: {
         shouldCreateUser: true,
