@@ -27,6 +27,7 @@ const hi: Messages = {
     saveAndExit: "सेव करके बाहर जाएं",
     offline: "आप ऑफ़लाइन हैं। इंटरनेट आने पर सेव की गई चीज़ें भेज दी जाएंगी।",
     online: "इंटरनेट वापस आ गया।",
+    install: "HaqCheck ऐप इंस्टॉल करें",
     unknown: "पता नहीं",
     notRecorded: "दर्ज नहीं",
   },

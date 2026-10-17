@@ -1,10 +1,24 @@
 {
-  "name": "HaqCheck",
+  "id": "/home",
+  "name": "HaqCheck — payment check & complaint",
   "short_name": "HaqCheck",
   "description": "Understand your payment. Check a possible mistake. Prepare your complaint with evidence.",
+  "lang": "en",
   "start_url": "/home",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#f7f8f5",
   "theme_color": "#0f665d",
-  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+  "categories": ["finance", "productivity", "utilities"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "shortcuts": [
+    { "name": "Check my payment", "url": "/check/new", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Earnings", "url": "/earnings", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Help", "url": "/help", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
+  ]
 }

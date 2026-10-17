@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { AppShell } from "@/components/AppShell";
+import { InstallApp } from "@/components/InstallApp";
 import { Icon } from "@/components/Icon";
 import { Badge, Card, LinkButton, RoundLink } from "@/components/ui";
 import { CaseProgress } from "@/features/cases/CaseProgress";
@@ -117,6 +118,7 @@ export default function HomePage() {
             {t("home.emergency")}
           </a>
         </Card>
+        <InstallApp />
       </div>
     </AppShell>
   );

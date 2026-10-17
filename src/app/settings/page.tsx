@@ -2,6 +2,7 @@
 
 import { useId, useRef, useState } from "react";
 import { AppShell } from "@/components/AppShell";
+import { InstallApp } from "@/components/InstallApp";
 import { Button, Card, LinkButton, Notice } from "@/components/ui";
 import type { Locale } from "@/domain/case";
 import { clearDeviceData } from "@/lib/devicePrefs";
@@ -150,6 +151,7 @@ export default function SettingsPage() {
           {t("settings.clearDevice")}
         </Button>
         {cleared ? <p className="text-center text-sm text-success-ink">{t("settings.cleared")}</p> : null}
+        <InstallApp />
       </Card>
     </AppShell>
   );

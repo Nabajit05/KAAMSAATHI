@@ -25,6 +25,7 @@ const en = {
     saveAndExit: "Save and exit",
     offline: "You are offline. Saved items will sync when you reconnect.",
     online: "Back online.",
+    install: "Install HaqCheck app",
     unknown: "Unknown",
     notRecorded: "Not recorded",
   },

@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "HaqCheck",
   description: "Understand your payment. Check a possible mistake. Prepare your complaint with evidence.",
   manifest: "/manifest.webmanifest",
+  applicationName: "HaqCheck",
+  appleWebApp: { capable: true, title: "HaqCheck", statusBarStyle: "default" },
+  icons: { icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/icons/icon-192.png", sizes: "192x192" }], apple: "/icons/apple-touch-icon.png" },
   robots: { index: false, follow: false },
 };
 
