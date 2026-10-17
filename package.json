@@ -1,10 +1,10 @@
 {
-  "name": "haqcheck",
+  "name": "kaamsaathi",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "opennextjs-cloudflare build",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
@@ -13,7 +13,8 @@
     "fixtures": "node --experimental-strip-types scripts/render-fixtures.ts",
     "cf:build": "opennextjs-cloudflare build",
     "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "build:next": "next build"
   },
   "dependencies": {
     "@google/genai": "1.52.0",

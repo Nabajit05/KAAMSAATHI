@@ -25,7 +25,7 @@ export default defineConfig({
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
   ],
   webServer: {
-    command: `mkdir -p "${BUILD_DIR}" && rsync -a --delete --exclude .next --exclude ".env*" --exclude node_modules --exclude tests --exclude test-results "${SRC}/" "${BUILD_DIR}/" && ln -sfn "${SRC}/node_modules" "${BUILD_DIR}/node_modules" && cd "${BUILD_DIR}" && npm run build && npx next start -p ${PORT}`,
+    command: `mkdir -p "${BUILD_DIR}" && rsync -a --delete --exclude .next --exclude ".env*" --exclude node_modules --exclude tests --exclude test-results "${SRC}/" "${BUILD_DIR}/" && ln -sfn "${SRC}/node_modules" "${BUILD_DIR}/node_modules" && cd "${BUILD_DIR}" && npx next build && npx next start -p ${PORT}`,
     url: `http://localhost:${PORT}`,
     reuseExistingServer: process.env.PW_REUSE_SERVER === "1",
     timeout: 300_000,
