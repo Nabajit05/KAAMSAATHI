@@ -532,6 +532,7 @@ const en = {
     network: "No connection. Please check your internet and try again.",
     timeout: "This is taking too long. Please try again.",
     notFound: "We couldn't find that.",
+    rateLimited: "Too many tries in a short time. Please wait a minute and try again.",
     quota: "You've reached today's limit for this. Please try again tomorrow.",
     aiUnavailable: "The AI service is not available right now. You can enter the numbers yourself.",
     conflict: "This case was changed somewhere else. We've loaded the latest version — please check and try again.",

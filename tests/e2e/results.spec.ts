@@ -62,7 +62,7 @@ test.describe("results by fixture (English)", () => {
 
 // KNOWN APP BUG (src/domain/incentive.ts:103): the "Offer target" step carries both amount (offer amount) and count
 // (threshold); renderers prefer the amount, so the target row shows "₹600" instead of "30 orders".
-test.fail("A: 'How we checked' shows the offer target as an order count (known bug: shows rupee amount)", async ({ page }) => {
+test("A: 'How we checked' shows the offer target as an order count", async ({ page }) => {
   await demoToResult(page, "A");
   await page.locator("summary", { hasText: "How we checked" }).click();
   const row = page.locator("details table tr", { hasText: "Offer target" });

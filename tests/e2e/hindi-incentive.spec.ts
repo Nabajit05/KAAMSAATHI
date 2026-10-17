@@ -80,7 +80,7 @@ test("Hindi complaint: editing approved text shows it changed since approval, an
 
 // KNOWN APP BUG: the "Changed since you approved it" notice (complaint/page.tsx, shown when approvedRevision !== null && !approved)
 // can never render, because withComplaintText (src/domain/case.ts:200) resets approvedRevision to null on any edit.
-test.fail("editing after approval shows 'Changed since you approved it' (known bug: notice is unreachable)", async ({ page }) => {
+test("editing after approval shows 'Changed since you approved it'", async ({ page }) => {
   await page.goto("/");
   await startExample(page, "A");
   await gotoReview(page);

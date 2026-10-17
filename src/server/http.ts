@@ -135,5 +135,6 @@ export function rateLimit(key: string, limit: number, windowMs: number) {
 }
 
 export function clientIp(req: NextRequest): string {
-  return req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "unknown";
+  // x-real-ip is set by the hosting proxy (e.g. Vercel); the first X-Forwarded-For hop can be spoofed by clients.
+  return req.headers.get("x-real-ip") || req.headers.get("x-forwarded-for")?.split(",").at(-1)?.trim() || "unknown";
 }

@@ -197,7 +197,8 @@ export function withComplaintText(c: CaseRecord, text: string, now = new Date())
   if (!c.complaint || c.complaint.text === text) return c;
   return {
     ...c,
-    complaint: { ...c.complaint, text, revision: c.complaint.revision + 1, approvedAt: null, approvedRevision: null },
+    // Approval stays attached to the old revision, so it no longer counts but the UI can explain why.
+    complaint: { ...c.complaint, text, revision: c.complaint.revision + 1 },
     updatedAt: now.toISOString(),
   };
 }

@@ -100,7 +100,7 @@ export function checkIncentive(facts: FactSet, inputRevision: number): CheckResu
   const lowest = Math.min(...tiers.map((t) => t.minOrders));
 
   steps.push({ label: "qualifying_orders", amount: null, count: orders, op: "info", fields: ["qualifying_orders"] });
-  steps.push({ label: "offer_threshold", amount: amount, count: threshold, op: "≥", fields: ["offer_threshold_orders", "offer_amount"] });
+  steps.push({ label: "offer_threshold", amount: null, count: threshold, op: "≥", fields: ["offer_threshold_orders"] });
 
   // Threshold not reached: no incentive is established, whatever the other conditions say.
   if (orders < lowest) {

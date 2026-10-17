@@ -39,7 +39,7 @@ Recommended audience: synthetic demo and a small private pilot only. No legal or
 | Signed-in earnings queue sync with client ids | Server upsert and queue logic written; not exercised against a live database. The offline reconnect flow in a browser is unverified |
 | Service worker in a production build | Written, registered in production only; offline behaviour not verified in a browser |
 | Copy / share / print of the complaint, `/cases/[id]/print` with Hindi text | Not recorded as verified |
-| Accessibility: keyboard flows, focus restoration, screen reader, 320 px and 200% zoom, axe | Not run; `tests/e2e/` has no specs, so no automated axe or Playwright results exist |
+| Screen reader and 200% zoom | Not tested. Keyboard focus, axe (0 violations on 9 pages) and 320 px reflow are covered by Playwright — see TEST-REPORT.md |
 | Security headers and CSP in a deployed environment | Configured in `next.config.ts`; not checked against a deployed origin |
 
 ## Blocked (waiting on credentials)
@@ -50,7 +50,6 @@ Recommended audience: synthetic demo and a small private pilot only. No legal or
 ## Deferred
 
 - P2 items from the brief: additional platform formats, additional languages, richer redaction UI, advanced PDF export, partner dashboards, automated follow-up interpretation.
-- Playwright end-to-end specs from brief section 13 (config exists; `tests/e2e/` is empty) and axe runs.
 - Nonce-based CSP (currently `script-src 'unsafe-inline'`).
 - Durable, distributed rate limiting (current limiter is in memory).
 - PDF upload (only JPEG, PNG, WebP are accepted; no dead PDF path).

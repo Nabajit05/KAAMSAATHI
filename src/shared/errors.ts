@@ -49,8 +49,9 @@ export function errorMessageKey(code: ErrorCode | "network"): string {
     case "not_found":
       return "error.notFound";
     case "quota_exceeded":
-    case "rate_limited":
       return "error.quota";
+    case "rate_limited":
+      return "error.rateLimited";
     case "ai_unavailable":
     case "ai_invalid_output":
       return "error.aiUnavailable";
